@@ -4,11 +4,6 @@ dofile(minetest.get_modpath("darkage").."/mapgen.lua")
 dofile(minetest.get_modpath("darkage").."/building.lua")
 dofile(minetest.get_modpath("darkage").."/furniture.lua")
 dofile(minetest.get_modpath("darkage").."/alias.lua")
-if minetest.get_modpath("moreblocks") then
-dofile(minetest.get_modpath("darkage").."/stairsplus.lua")--only if moreblocks installed
-else
-dofile(minetest.get_modpath("darkage").."/stairs.lua")
-end
 ----------
 -- Items
 ----------
@@ -22,16 +17,16 @@ minetest.register_node("darkage:adobe", {
 })
 
 minetest.register_node("darkage:basalt", {
-  description = "Basalt",
+	description = "Basalt",
 	tiles = {"darkage_basalt.png"},
 	is_ground_content = true,
-  drop = 'darkage:basalt_cobble',
+	drop = 'darkage:basalt_cobble',
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults()
 })
 
 minetest.register_node("darkage:basalt_cobble", {
-  description = "Basalt Cobble",
+	description = "Basalt Cobble",
 	tiles = {"darkage_basalt_cobble.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -39,10 +34,10 @@ minetest.register_node("darkage:basalt_cobble", {
 })
 
 minetest.register_node("darkage:chalk", {
-  description = "Chalk",
+	description = "Chalk",
 	tiles = {"darkage_chalk.png"},
 	is_ground_content = true,
-  drop = 'darkage:chalk_powder 2',
+	drop = 'darkage:chalk_powder 2',
 	groups = {crumbly=2,cracky=2},
 	sounds = default.node_sound_stone_defaults()
 })
@@ -52,8 +47,8 @@ minetest.register_node("darkage:cobble_with_plaster", {
 	tiles = {"darkage_cobble_with_plaster_D.png", "darkage_cobble_with_plaster_B.png", "darkage_cobble_with_plaster_C.png",
 		"darkage_cobble_with_plaster_A.png", "default_cobble.png", "darkage_chalk.png"},
 	is_ground_content = true,
-  paramtype2 = "facedir",
-  drop = 'default:cobble',
+	paramtype2 = "facedir",
+	drop = 'default:cobble',
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -87,13 +82,13 @@ minetest.register_node("darkage:dry_leaves", {
 	description = "Dry Leaves",
 	tiles = {"darkage_dry_leaves.png"},
 	is_ground_content = true,
-  paramtype = "light",
+	paramtype = "light",
 	groups = {snappy=3, flammable=2},
 	sounds = default.node_sound_leaves_defaults()
 })
 
 minetest.register_node("darkage:gneiss", {
-  description = "Gneiss",
+	description = "Gneiss",
 	tiles = {"darkage_gneiss.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -114,7 +109,7 @@ minetest.register_node("darkage:gneiss", {
 })
 
 minetest.register_node("darkage:gneiss_cobble", {
-  description = "Gneiss Cobble",
+	description = "Gneiss Cobble",
 	tiles = {"darkage_gneiss_cobble.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -122,7 +117,7 @@ minetest.register_node("darkage:gneiss_cobble", {
 })
 
 minetest.register_node("darkage:marble", {
-  description = "Marble",
+	description = "Marble",
 	tiles = {"darkage_marble.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -131,27 +126,27 @@ minetest.register_node("darkage:marble", {
 
 
 minetest.register_node("darkage:mud", {
-  description = "Mud",
+	description = "Mud",
 	tiles = {"darkage_mud_up.png","darkage_mud.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
-  drop = 'darkage:mud_lump 4',
+	drop = 'darkage:mud_lump 4',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
 })
 
 minetest.register_node("darkage:ors", {
-  description = "Old Red Sandstone",
+	description = "Old Red Sandstone",
 	tiles = {"darkage_ors.png"},
 	is_ground_content = true,
-  drop = 'darkage:ors_cobble',
+	drop = 'darkage:ors_cobble',
 	groups = {crumbly=2,cracky=2},
 	sounds = default.node_sound_stone_defaults()
 })
 
 minetest.register_node("darkage:ors_cobble", {
-  description = "Old Red Sandstone Cobble",
+	description = "Old Red Sandstone Cobble",
 	tiles = {"darkage_ors_cobble.png"},
 	is_ground_content = true,
 	groups = {crumbly=2,cracky=2},
@@ -160,7 +155,7 @@ minetest.register_node("darkage:ors_cobble", {
 
 
 --minetest.register_node("darkage:sandstone_cobble", {
---  description = "Sandstone Cobble",
+--	description = "Sandstone Cobble",
 --	tiles = {"darkage_sandstone_cobble.png"},
 --	is_ground_content = true,
 --	groups = {crumbly=2,cracky=2},
@@ -170,7 +165,7 @@ minetest.register_node("darkage:ors_cobble", {
 
 
 minetest.register_node("darkage:serpentine", {
-  description = "Serpentine",
+	description = "Serpentine",
 	tiles = {"darkage_serpentine.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -178,7 +173,7 @@ minetest.register_node("darkage:serpentine", {
 })
 
 minetest.register_node("darkage:shale", {
-  description = "Shale",
+	description = "Shale",
 	tiles = {"darkage_shale.png","darkage_shale.png","darkage_shale_side.png"},
 	is_ground_content = true,
 	groups = {crumbly=2,cracky=2},
@@ -186,7 +181,7 @@ minetest.register_node("darkage:shale", {
 })
 
 minetest.register_node("darkage:schist", {
-  description = "Schist",
+	description = "Schist",
 	tiles = {"darkage_schist.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -194,27 +189,27 @@ minetest.register_node("darkage:schist", {
 })
 
 minetest.register_node("darkage:silt", {
-  description = "Silt",
+	description = "Silt",
 	tiles = {"darkage_silt.png"},
 	is_ground_content = true,
 	groups = {crumbly=3},
-  drop = 'darkage:silt_lump 4',
+	drop = 'darkage:silt_lump 4',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = "",
 	}),
 })
 
 minetest.register_node("darkage:slate", {
-  description = "Slate",
+	description = "Slate",
 	tiles = {"darkage_slate.png","darkage_slate.png","darkage_slate_side.png"},
 	is_ground_content = true,
-  drop = 'darkage:slate_cobble',
+	drop = 'darkage:slate_cobble',
 	groups = {cracky=2},
 	sounds = default.node_sound_stone_defaults()
 })
 
 minetest.register_node("darkage:slate_cobble", {
-  description = "Slate Cobble",
+	description = "Slate Cobble",
 	tiles = {"darkage_slate_cobble.png"},
 	is_ground_content = true,
 	groups = {cracky=2},
@@ -222,7 +217,7 @@ minetest.register_node("darkage:slate_cobble", {
 })
 
 minetest.register_node("darkage:slate_tale", {
-  description = "Slate Tale",
+	description = "Slate Tale",
 	tiles = {"darkage_slate_tale.png"},
 	is_ground_content = true,
 	groups = {cracky=2},
@@ -230,7 +225,7 @@ minetest.register_node("darkage:slate_tale", {
 })
 
 minetest.register_node("darkage:straw", {
-  description = "Straw",
+	description = "Straw",
 	tiles = {"darkage_straw.png"},
 	is_ground_content = true,
 	groups = {snappy=3, flammable=2},
@@ -238,7 +233,7 @@ minetest.register_node("darkage:straw", {
 })
 
 minetest.register_node("darkage:stone_brick", {
-  description = "Stone Brick",
+	description = "Stone Brick",
 	tiles = {"darkage_stone_brick.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
@@ -246,16 +241,16 @@ minetest.register_node("darkage:stone_brick", {
 })
 
 minetest.register_node("darkage:straw_bale", {
-  description = "Straw Bale",
+	description = "Straw Bale",
 	tiles = {"darkage_straw_bale.png"},
 	is_ground_content = true,
-  drop = 'darkage:straw 4',
+	drop = 'darkage:straw 4',
 	groups = {snappy=2, flammable=2},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
 minetest.register_node("darkage:marble", {
-  description = "Marble",
+	description = "Marble",
 	tiles = {"darkage_marble.png"},
 	is_ground_content = true,
 	groups = {cracky=2},
@@ -263,7 +258,7 @@ minetest.register_node("darkage:marble", {
 })
 
 --minetest.register_node("darkage:marble_tile", { --disabled because texture not found
---  description = "Marble Tile",
+--	description = "Marble Tile",
 --	tiles = {"darkage_marble_tile.png"},
 --	is_ground_content = true,
 --	groups = {cracky=2},
@@ -291,25 +286,17 @@ minetest.register_node("darkage:marble", {
 ---------------
 -- Crafts Items
 ---------------
-minetest.register_craftitem("darkage:chalk_powder", {
-	description = "Chalk Powder",
-	inventory_image = "darkage_chalk_powder.png",
-})
-
-minetest.register_craftitem("darkage:mud_lump", {
-	description = "Mud Lump",
-	inventory_image = "darkage_mud_lump.png",
-})
-
-minetest.register_craftitem("darkage:silt_lump", {
-	description = "Silt Lump",
-	inventory_image = "darkage_silt_lump.png",
-})
-
-minetest.register_craftitem("darkage:iron_stick", {
-	description = "Iron Stick",
-	inventory_image = "darkage_iron_stick.png",
-})
+for _,i in ipairs({
+	{"chalk_powder", "Chalk Powder"},
+	{"mud_lump", "Mud Lump"},
+	{"silt_lump", "Silt Lump"},
+	{"iron_stick", "Iron Stick"},
+}) do
+	minetest.register_craftitem("darkage:"..i[1], {
+		description = i[2],
+		inventory_image = "darkage_"..i[1]..".png",
+	})
+end
 
 
 ----------
@@ -321,7 +308,7 @@ minetest.register_craftitem("darkage:iron_stick", {
 minetest.register_craft({
 	output = 'darkage:adobe 4',
 	recipe = {
-    {'default:sand','default:sand'},
+		{'default:sand','default:sand'},
 		{'default:clay_lump','darkage:straw'},
 	}
 })
@@ -330,7 +317,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:basalt_cobble 4',
 	recipe = {
-    {'default:cobble','default:cobble'},
+		{'default:cobble','default:cobble'},
 		{'default:coal_lump','default:coal_lump'},
 	}
 })
@@ -338,7 +325,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:cobble_with_plaster 2',
 	recipe = {
-    {'default:cobble','darkage:chalk_powder'},
+	{'default:cobble','darkage:chalk_powder'},
 		{'default:cobble','darkage:chalk_powder'},
 	}
 })
@@ -346,7 +333,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:chalk 2',
 	recipe = {
-    {'darkage:chalk_powder','darkage:chalk_powder'},
+	{'darkage:chalk_powder','darkage:chalk_powder'},
 	{'darkage:chalk_powder','darkage:chalk_powder'},
 	}
 })
@@ -354,7 +341,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:cobble_with_plaster 2',
 	recipe = {
-    {'darkage:chalk_powder','default:cobble'},
+	{'darkage:chalk_powder','default:cobble'},
 		{'darkage:chalk_powder','default:cobble'},
 	}
 })
@@ -362,7 +349,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:darkdirt 4',
 	recipe = {
-    {'default:dirt','default:dirt'},
+	{'default:dirt','default:dirt'},
 		{'default:gravel','default:gravel'},
 	}
 })
@@ -370,7 +357,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:mud 3',
 	recipe = {
-    {'default:dirt','default:dirt'},
+	{'default:dirt','default:dirt'},
 		{'default:clay_lump','darkage:silt_lump'},
 	}
 })
@@ -378,15 +365,15 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:mud',
 	recipe = {
-    {'darkage:mud_lump','darkage:mud_lump'},
-    {'darkage:mud_lump','darkage:mud_lump'},
+		{'darkage:mud_lump','darkage:mud_lump'},
+		{'darkage:mud_lump','darkage:mud_lump'},
 	}
 })
 
 minetest.register_craft({
 	output = 'darkage:ors 4',
 	recipe = {
-    {'default:sandstone','default:sandstone'},
+		{'default:sandstone','default:sandstone'},
 		{'default:iron_lump','default:sandstone'},
 	}
 })
@@ -394,7 +381,7 @@ minetest.register_craft({
 --minetest.register_craft({
 --	output = 'darkage:ors_cobble 4',
 --	recipe = {
---    {'darkage:sandstone_cobble','darkage:sandstone_cobble'},
+--		{'darkage:sandstone_cobble','darkage:sandstone_cobble'},
 --		{'default:iron_lump','darkage:sandstone_cobble'},
 --	}
 --})
@@ -402,7 +389,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:silt 3',
 	recipe = {
-    {'default:sand','default:sand'},
+		{'default:sand','default:sand'},
 		{'default:clay_lump','default:clay_lump'},
 	}
 })
@@ -410,7 +397,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:silt',
 	recipe = {
-    {'darkage:silt_lump','darkage:silt_lump'},
+		{'darkage:silt_lump','darkage:silt_lump'},
 		{'darkage:silt_lump','darkage:silt_lump'},
 	}
 })
@@ -418,7 +405,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:slate_tale 2',
 	recipe = {
-    {'darkage:slate_cobble','darkage:slate_cobble'},
+		{'darkage:slate_cobble','darkage:slate_cobble'},
 		{'darkage:slate_cobble','darkage:slate_cobble'},
 	}
 })
@@ -426,16 +413,16 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:stone_brick 9',--changed bacause conflicts with moreblocks
 	recipe = {
-    {'default:cobble','default:cobble','default:cobble'},--changed bacause conflicts with moreblocks
-	{'default:cobble','default:cobble','default:cobble'},--changed bacause conflicts with moreblocks
-	{'default:cobble','default:cobble','default:cobble'},--changed bacause conflicts with moreblocks
+		{'default:cobble','default:cobble','default:cobble'},
+		{'default:cobble','default:cobble','default:cobble'},
+		{'default:cobble','default:cobble','default:cobble'},
 	}
 })
 
 minetest.register_craft({
 	output = 'darkage:straw 2',
 	recipe = {
-    {'default:dry_shrub','default:dry_shrub'},
+	{'default:dry_shrub','default:dry_shrub'},
 		{'default:dry_shrub','default:dry_shrub'},
 	}
 })
@@ -443,7 +430,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'darkage:straw 2',
 	recipe = {
-    {'darkage:dry_leaves','darkage:dry_leaves'},
+	{'darkage:dry_leaves','darkage:dry_leaves'},
 		{'darkage:dry_leaves','darkage:dry_leaves'},
 	}
 })
@@ -453,102 +440,46 @@ if minetest.get_modpath("farming") then
 minetest.register_craft({
 	output = 'darkage:straw 4',
 	recipe = {
-    {'farming:wheat_harvested','farming:wheat_harvested'},
+	{'farming:wheat_harvested','farming:wheat_harvested'},
 	{'farming:wheat_harvested','farming:wheat_harvested'},
 	}
 })
-else
---nothing else
 end
 
 minetest.register_craft({
 	output = 'darkage:straw_bale',
 	recipe = {
-    {'darkage:straw','darkage:straw'},
-    {'darkage:straw','darkage:straw'},
+		{'darkage:straw','darkage:straw'},
+		{'darkage:straw','darkage:straw'},
 	}
 })
 
 minetest.register_craft({
 	output = 'darkage:iron_stick 4',
 	recipe = {
-    {'default:steel_ingot'},
+		{'default:steel_ingot'},
 	}
 })
 
 -- Cookings
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:basalt",
-	recipe = "darkage:basalt_cobble",
-})
+for _,i in ipairs({
+	{"basalt_cobble", "basalt"},
+	{"leaves", "dry_leaves"},
+	{"schist", "gneiss"},
+	{"gneiss_cobble", "gneiss"},
+	{"ors_cobble", "ors"},
+	{"slate", "schist"},
+	{"mud", "shale"},
+	{"shale", "slate"},
+	{"slate_cobble", "slate"},
+}) do
+	minetest.register_craft({
+		type = "cooking",
+		recipe = "darkage:"..i[1],
+		output = "darkage:"..i[2],
+	})
+end
 
---minetest.register_craft({
---	type = "cooking",
---	output = "default:desert_stone",
---	recipe = "darkage:desert_stone_cobble",
---})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:dry_leaves",
-	recipe = "default:leaves",
-})
-
---minetest.register_craft({
---	type = "cooking",
---	output = "darkage:sandstone_cobble",
---	recipe = "default:sandstone",
---})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:gneiss",
-	recipe = "darkage:schist",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:gneiss",
-	recipe = "darkage:gneiss_cobble",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:ors",
-	recipe = "darkage:ors_cobble",
-})
-
-
---minetest.register_craft({
---	type = "cooking",
---	output = "darkage:sandstone_cobble",
---	recipe = "default:sandstone",
---})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:schist",
-	recipe = "darkage:slate",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:shale",
-	recipe = "darkage:mud",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:slate",
-	recipe = "darkage:shale",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "darkage:slate",
-	recipe = "darkage:slate_cobble",
-})
 
 -- Desert
 minetest.register_craft({
@@ -556,12 +487,20 @@ minetest.register_craft({
 	output = "darkage:ors_cobble",
 	recipe = "default:desert_stone",
 })
+--[[
+output = "default:desert_stone",
+recipe = "darkage:desert_stone_cobble",
+output = "darkage:sandstone_cobble",
+recipe = "default:sandstone",
+output = "darkage:sandstone_cobble",
+recipe = "default:sandstone",]]
 
 minetest.register_craft({
 	output = 'default:desert_stone 2',
 	recipe = {
-    {'default:desert_sand','default:desert_sand'},
+		{'default:desert_sand','default:desert_sand'},
 		{'default:desert_sand','default:desert_sand'},
 	}
 })
-
+dofile(minetest.get_modpath("darkage").."/stairs.lua")
+print("[darkage] loaded")

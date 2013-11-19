@@ -1,27 +1,19 @@
-minetest.register_node("darkage:glass", {
+local tmp = {
 	description = "medieval Glass",
 	drawtype = "glasslike",
 	tiles = {"darkage_glass.png"},
-	inventory_image = minetest.inventorycube("darkage_glass.png"),
+	inventory_image = "darkage_glass.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
-})
+}
+minetest.register_node("darkage:glass", tmp)
 
-minetest.register_node("darkage:glow_glass", {
-	description = "medieval glow glass",
-	drawtype = "glasslike",
-	tiles = {"darkage_glass.png"},
-	inventory_image = minetest.inventorycube("darkage_glass.png"),
-	paramtype = "light",
-	light_source = 18,
-	sunlight_propagates = true,
-	is_ground_content = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
-	sounds = default.node_sound_glass_defaults(),
-})
+tmp.description = "medieval glow glass"
+tmp.light_source = 18
+minetest.register_node("darkage:glow_glass", tmp)
 
 minetest.register_craft({
 	output = 'darkage:glow_glass 1',

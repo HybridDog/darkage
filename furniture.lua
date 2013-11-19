@@ -106,18 +106,6 @@ minetest.register_node('darkage:wood_shelves', {
 --	sounds = default.node_sound_stone_defaults()
 --})
 
-minetest.register_node("darkage:iron_bars", {
-	description = "Iron Bars",
-  drawtype = "glasslike",
-	tiles = {"darkage_iron_bars.png"},
-  inventory_image = "darkage_iron_bars.png",
-	wield_image = "darkage_iron_bars.png",
-	is_ground_content = true,
-	paramtype = "light",
-	sunlight_propagates = true,
-	groups = {cracky=3},
-	sounds = default.node_sound_stone_defaults()
-})
 
 minetest.register_node("darkage:lamp", {
 	description = "Lamp",
@@ -129,45 +117,6 @@ minetest.register_node("darkage:lamp", {
 	light_source = LIGHT_MAX-1,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,flammable=1},
 	sounds = default.node_sound_glass_defaults(),
-})
-
-minetest.register_node("darkage:iron_grille", {
-	description = "Iron Grille",
-  drawtype = "glasslike",
-	tiles = {"darkage_iron_grille.png"},
-  inventory_image = "darkage_iron_grille.png",
-	wield_image = "darkage_iron_grille.png",
-	is_ground_content = true,
-	paramtype = "light",
-	sunlight_propagates = true,
-	groups = {cracky=3},
-	sounds = default.node_sound_stone_defaults()
-})
-
-minetest.register_node("darkage:wood_bars", {
-	description = "Wooden Bars",
-  drawtype = "glasslike",
-	tiles = {"darkage_wood_bars.png"},
-  inventory_image = "darkage_wood_bars.png",
-	wield_image = "darkage_wood_bars.png",
-	is_ground_content = true,
-	paramtype = "light",
-	sunlight_propagates = true,
-	groups = {snappy=1,choppy=2},
-	sounds = default.node_sound_stone_defaults()
-})
-
-minetest.register_node("darkage:wood_grille", {
-	description = "Wooden Grille",
-  drawtype = "glasslike",
-	tiles = {"darkage_wood_grille.png"},
-  inventory_image = "darkage_wood_grille.png",
-	wield_image = "darkage_wood_grille.png",
-	is_ground_content = true,
-	paramtype = "light",
-	sunlight_propagates = true,
-	groups = {snappy=1,choppy=2},
-	sounds = default.node_sound_stone_defaults()
 })
 
 minetest.register_node("darkage:wood_frame", {
@@ -211,47 +160,11 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'darkage:iron_bars 2',
-	recipe = {
-    {'darkage:iron_stick','','darkage:iron_stick'},	--changed reziep to avoid problems with 3dfurniture -addi
-    {'darkage:iron_stick','','darkage:iron_stick'},	
-    {'darkage:iron_stick','','darkage:iron_stick'},	
-	}
-})
-
-minetest.register_craft({
-	output = 'darkage:iron_grille 3',
-	recipe = {
-    {'','darkage:iron_bars',''},
-    {'darkage:iron_bars','','darkage:iron_bars'},
-    {'','darkage:iron_bars',''},
-	}
-})
-
-minetest.register_craft({
 	output = 'darkage:lamp',
 	recipe = {
     {'default:stick','','default:stick'},
     {'','default:torch',''},
     {'default:stick','','default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'darkage:wood_bars 2',
-	recipe = {
-    {'default:stick','','default:stick'},
-    {'default:stick','','default:stick'},
-    {'default:stick','','default:stick'},
-	}
-})
-
-minetest.register_craft({
-	output = 'darkage:wood_grille 3',
-	recipe = {
-    {'','darkage:wood_bars',''},
-    {'darkage:wood_bars','','darkage:wood_bars'},
-    {'','darkage:wood_bars',''},
 	}
 })
 

@@ -224,14 +224,40 @@ local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, 
 	end
 	--print("generate_ore done")
 end]]
+--[[
+minetest.register_ore({
+	ore_type	 	= "sheet",
+	ore				= "darkage:chalk",
+	wherein			= "default:stone",
+	clust_size		= 4,
+	height_min		= -20,
+	height_max		= 50,
+	noise_params	= {offset=0, scale=2, spread={x=10000, y=10000, z=10000}, seed=1135, octaves=2, persist=0.70}
+})
 
+minetest.register_ore({
+	ore_type	 	= "sheet",
+	ore				= "darkage:gneiss",
+	wherein			= "default:stone",
+	clust_size		= 2,
+	height_min		= -31000,
+	height_max		= -250,
+	noise_params	= {offset=0, scale=10, spread={x=2000, y=10000, z=2000}, seed=1139, octaves=2, persist=0.70}
+})
+]]
 minetest.register_on_generated(function(minp, maxp, seed)
+	if minp.y >= 20
+	or maxp.y <= -20 then
+		return
+	end
 	-- Generate stratus
-	print("DARKAGE: Generate stratus");
+	t1 = os.clock()
+	print("[darkage] Generate...")
 --	generate_ore("darkage:desert_stone_with_iron", "default:desert_stone", minp, maxp, seed+0, 1/7/7/7, 3, 5, -15, 40)
 	generate_claylike("darkage:mud", minp, maxp, seed+1, 4, 0, 2, 0)
 	generate_claylike("darkage:silt", minp, maxp, seed+2, 4, -1, 1, 1)
---[[	generate_stratus("darkage:chalk", 
+	print(string.format("[darkage] finished after: %.2fs", os.clock() - t1))
+--[[	generate_stratus("darkage:chalk", (name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
 					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+3, 4, 25, 8, 0, -20,	50)

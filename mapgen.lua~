@@ -251,7 +251,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		return
 	end
 	-- Generate stratus
-	local t1 = os.clock()
+	t1 = os.clock()
 	print("[darkage] Generate...")
 --	generate_ore("darkage:desert_stone_with_iron", "default:desert_stone", minp, maxp, seed+0, 1/7/7/7, 3, 5, -15, 40)
 	generate_claylike("darkage:mud", minp, maxp, seed+1, 4, 0, 2, 0)

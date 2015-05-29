@@ -138,7 +138,7 @@ minetest.register_node("darkage:wood_frame", {
 
 
 ----------
--- Crafts 
+-- Crafts
 ----------
 
 minetest.register_craft({
@@ -150,12 +150,12 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({ 		
-	output = 'darkage:chain 2',	
-	recipe = {					
+minetest.register_craft({
+	output = 'darkage:chain 2',
+	recipe = {
     {'darkage:iron_stick'},		--changed reziep to avoid problems with ironbars - addi
-    {'darkage:iron_stick'},	
-    {'darkage:iron_stick'},	
+    {'darkage:iron_stick'},
+    {'darkage:iron_stick'},
 	}
 })
 

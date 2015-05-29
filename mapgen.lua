@@ -85,7 +85,7 @@ local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, s
 			--print("	area of generation ("..dump(rx)..","..dump(rz)..","..dump(ry)..")")
 			for x1=0,rx do
 				rz = rz + 3 - pr:next(1,6)
-				if rz < 1 then 
+				if rz < 1 then
 					rz = 1
 				end
 				for z1=pr:next(1,3),rz do
@@ -261,36 +261,36 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+3, 4, 25, 8, 0, -20,	50)
-	generate_stratus("darkage:ors", 
+	generate_stratus("darkage:ors",
 					{"default:stone"},
 					{"default:stone","air","default:water_source"}, nil,
 					minp, maxp, seed+4, 4, 25, 7, 50, -200,	500)
-	generate_stratus("darkage:shale", 
-					{"default:stone"}, 
+	generate_stratus("darkage:shale",
+					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+5, 4, 23, 7, 50, -50,	20)
-	generate_stratus("darkage:slate", 
-					{"default:stone"}, 
+	generate_stratus("darkage:slate",
+					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+6, 6, 23, 5, 50, -500, 0)
-	generate_stratus("darkage:schist", 
-					{"default:stone"}, 
+	generate_stratus("darkage:schist",
+					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+7, 6, 19, 6, 50, -31000, -10)
-	generate_stratus("darkage:basalt", 
-					{"default:stone"}, 
+	generate_stratus("darkage:basalt",
+					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+8, 5, 20, 5, 20, -31000, -50)
-	generate_stratus("darkage:marble", 
+	generate_stratus("darkage:marble",
 					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+9, 4, 25, 6, 50, -31000,	-75)
-	generate_stratus("darkage:serpentine", 
+	generate_stratus("darkage:serpentine",
 					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+10, 4, 28, 8, 50, -31000,	-350)
-	generate_stratus("darkage:gneiss", 
-					{"default:stone"}, 
+	generate_stratus("darkage:gneiss",
+					{"default:stone"},
 					{"default:stone","air"}, nil,
 					minp, maxp, seed+11, 4, 15, 5, 50, -31000, -250)]]
 end)

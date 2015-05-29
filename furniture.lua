@@ -29,7 +29,7 @@ minetest.register_node('darkage:box', {
 	groups = { snappy = 3 },
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec",
 				"size[8,8]"..
 				"list[current_name;main;0,0;8,3;]"..
@@ -39,7 +39,7 @@ minetest.register_node('darkage:box', {
 		inv:set_size("main", 16)
 	end,
 	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
+		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		return inv:is_empty("main")
 	end,
@@ -68,7 +68,7 @@ minetest.register_node('darkage:wood_shelves', {
 	groups = { snappy = 3 },
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec",
 				"size[8,10]"..
         "list[context;up;0,0;8,3;]"..
@@ -80,7 +80,7 @@ minetest.register_node('darkage:wood_shelves', {
 		inv:set_size("down", 16)
 	end,
 	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
+		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		return inv:is_empty("shape") and inv:is_empty("out") and inv:is_empty("water")
 	end,

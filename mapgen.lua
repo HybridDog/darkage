@@ -6,28 +6,37 @@
 --stratus_chance inverse probability in a given radius 1:2, 1:3 etc
 --radius horizontal radius of the stratus
 --radius_y vertical radius of the stratus
---[[deep how deep can be from the ground
-local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
+-- [[deep how deep can be from the ground
+local function generate_single_stratus(str, minp, maxp, mapseed, data, area)
+	local name, wherein, ceilin, seed, stratus_chance, radius, radius_y, deep, height_min, height_max = unpack(str)
 	if maxp.y < height_min
 	or minp.y > height_max then
 		return
 	end
+	seed = seed+mapseed
+
+	name = minetest.get_content_id(name)
+	wherein = minetest.get_content_id(wherein[1])
+	ceilin = table.copy(ceilin)
+	for n,i in pairs(ceilin) do
+		ceilin[n] = minetest.get_content_id(i)
+	end
+
 	-- it will be only generate a stratus for every 100 m of area
 	local stratus_per_volume=1
-	local area=45
+	local area_size = 45
 	local y_min = math.max(minp.y, height_min)
 	local y_max = math.min(maxp.y, height_max)
-	local volume = ((maxp.x-minp.x+1)/area)*((y_max-y_min+1)/area)*((maxp.z-minp.z+1)/area)
+	local volume = ((maxp.x-minp.x+1)/area_size)*((y_max-y_min+1)/area_size)*((maxp.z-minp.z+1)/area_size)
 	local pr = PseudoRandom(seed)
 	local blocks = math.floor(stratus_per_volume*volume)
-	print("	<<"..dump(name)..">>");
+	minetest.log("info", "	<<"..dump(name)..">>");
 	if blocks == 0 then
 		blocks = 1
 	end
-	print("	blocks: "..dump(blocks).." in vol: "..dump(volume).." ("..dump(maxp.x-minp.x+1)..","..dump(y_max-y_min+1)..","..dump(maxp.z-minp.z+1)..")")
-	for i=1,blocks do
-		local x = pr:next(1,stratus_chance)
-		if x == 1 then
+	minetest.log("info", "	blocks: "..dump(blocks).." in vol: "..dump(volume).." ("..dump(maxp.x-minp.x+1)..","..dump(y_max-y_min+1)..","..dump(maxp.z-minp.z+1)..")")
+	for i = 1,blocks do
+		if pr:next(1,stratus_chance) == 1 then
 			-- TODO deep
 			local y0=y_max-radius_y+1
 			if y0 < y_min then
@@ -47,83 +56,66 @@ local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, s
 			else
 				z0 = pr:next(minp.z, z0)
 			end
-			local p0 = {x=x0, y=y0, z=z0}
-			local n = minetest.get_node(p0).name
+			local n = data[area:index(x0, y0, z0)]
 			local i = 0
 			--print("	upper node "..n)
-			x = 0
-			for k, v in ipairs(ceilin) do
+			local x
+			for _,v in ipairs(ceilin) do
 				if n == v then
-					x = 1
+					x = true
 					break
 				end
 			end
-			if x == 1 then
-			-- search for the node to replace
-			--print("	Searching nodes to replace from "..dump(y0-1).." to "..dump(y_min))
-			for y1=y0-1,y_min,-1 do
-				p0.y=y1
-				n = minetest.get_node(p0).name
-				x = 0
-				for k, v in ipairs(wherein) do
-					if n == v then
-						x = 1
+			if x then
+				-- search for the node to replace
+				--print("	Searching nodes to replace from "..dump(y0-1).." to "..dump(y_min))
+				for y1 = y0-1,y_min,-1 do
+					if data[area:index(x0, y1, z0)] == wherein then
+						y0 = y1-deep
+						if y0 < y_min then
+							y0 = y_min
+						end
 						break
 					end
 				end
-				if x == 1 then
-					y0=y1-deep
-					if y0 < y_min then
-						y0 = y_min
+				local rx=pr:next(radius/2,radius)+1
+				local rz=pr:next(radius/2,radius)+1
+				local ry=pr:next(radius_y/2,radius_y)+1
+				--print("	area of generation ("..dump(rx)..","..dump(rz)..","..dump(ry)..")")
+				for x1=0,rx do
+					rz = rz + 3 - pr:next(1,6)
+					if rz < 1 then
+						rz = 1
 					end
-					break
-				end
-			end
-			local rx=pr:next(radius/2,radius)+1
-			local rz=pr:next(radius/2,radius)+1
-			local ry=pr:next(radius_y/2,radius_y)+1
-			--print("	area of generation ("..dump(rx)..","..dump(rz)..","..dump(ry)..")")
-			for x1=0,rx do
-				rz = rz + 3 - pr:next(1,6)
-				if rz < 1 then
-					rz = 1
-				end
-				for z1=pr:next(1,3),rz do
-					local ry0=ry+ pr:next(1,3)
-					for y1=pr:next(1,3),ry0 do
-						local x2 = x0+x1
-						local y2 = y0+y1
-						local z2 = z0+z1
-						local p2 = {x=x2, y=y2, z=z2}
-						n = minetest.get_node(p2).name
-						x = 0
-						for k, v in ipairs(wherein) do
-							if n == v then
-								x = 1
-								break
-							end
-						end
-						if x == 1 then
-							if ceil == nil then
-								minetest.set_node(p2, {name=name})
+					for z1=pr:next(1,3),rz do
+						local ry0 = ry + pr:next(1,3)
+						for y1 = pr:next(1,3),ry0 do
+							local p2 = area:index(x0+x1, y0+y1, z0+z1)
+							if data[p2] == wherein then
+								data[p2] = name
 								i = i +1
-							else
-								local p3 = {p2.x,p2.y+1,p2}
-								if minetest.get_node(p3).name == ceil then
-									minetest.set_node(p2, {name=name})
-									i = i +1
-								end
 							end
 						end
 					end
 				end
 			end
-			print("	generated "..dump(i).." blocks in ("..dump(x0)..","..dump(y0)..","..dump(z0)..")")
-			end
+			minetest.log("info", "	generated "..i.." blocks in ("..x0..","..y0..","..z0..")")
 		end
 	end
 	--print("generate_ore done")
-end]]
+end
+
+local strati,n = {},1
+local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
+	strati[n] = {name, wherein, ceilin, seed, stratus_chance, radius, radius_y, deep, height_min, height_max}
+	n = n+1
+end
+
+local function generate_strati(minp, maxp, seed, data, area)
+	for _,str in ipairs(strati) do
+		generate_single_stratus(str, minp, maxp, seed, data, area)
+	end
+end
 
 local function generate_claylike(name, minp, maxp, seed, chance, minh, maxh, dirt)
 	if maxp.y <= maxh
@@ -224,6 +216,21 @@ local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, 
 	end
 	--print("generate_ore done")
 end]]
+
+--[[
+local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
+	minetest.register_ore({
+		ore_type	 	= "sheet",
+		ore				= name,
+		wherein			= "default:stone",
+		noise_threshhold = 1/stratus_chance,
+		noise_params	= {offset=0, scale=2, spread={x=radius, y=radius_y, z=radius}, seed=seed, octaves=2, persist=0.70}
+		clust_size		= 4,
+		y_min		= height_min,
+		y_max		= height_max,
+	})
+end--]]
+
 --[[
 minetest.register_ore({
 	ore_type	 	= "sheet",
@@ -243,54 +250,65 @@ minetest.register_ore({
 	height_min		= -31000,
 	height_max		= -250,
 	noise_params	= {offset=0, scale=10, spread={x=2000, y=10000, z=2000}, seed=1139, octaves=2, persist=0.70}
-})
-]]
+})--]]
+
+local seed = 0
+local minp, maxp
+-- [[ (name, wherein, ceilin, crap, crap, crap, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
+generate_stratus("darkage:chalk",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+3, 4, 25, 8, 0, -20,	50)
+generate_stratus("darkage:ors",
+				{"default:stone"},
+				{"default:stone","air","default:water_source"}, nil,
+				minp, maxp, seed+4, 4, 25, 7, 50, -200,	500)
+generate_stratus("darkage:shale",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+5, 4, 23, 7, 50, -50,	20)
+generate_stratus("darkage:slate",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+6, 6, 23, 5, 50, -500, 0)
+generate_stratus("darkage:schist",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+7, 6, 19, 6, 50, -31000, -10)
+generate_stratus("darkage:basalt",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+8, 5, 20, 5, 20, -31000, -50)
+generate_stratus("darkage:marble",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+9, 4, 25, 6, 50, -31000,	-75)
+generate_stratus("darkage:serpentine",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+10, 4, 28, 8, 50, -31000,	-350)
+generate_stratus("darkage:gneiss",
+				{"default:stone"},
+				{"default:stone","air"}, nil,
+				minp, maxp, seed+11, 4, 15, 5, 50, -31000, -250)--]]
+
 minetest.register_on_generated(function(minp, maxp, seed)
-	if minp.y >= 20
-	or maxp.y <= -20 then
-		return
-	end
 	-- Generate stratus
 	local t1 = os.clock()
 	print("[darkage] Generate...")
+
+	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+	local data = vm:get_data()
+	local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
+
 --	generate_ore("darkage:desert_stone_with_iron", "default:desert_stone", minp, maxp, seed+0, 1/7/7/7, 3, 5, -15, 40)
 	generate_claylike("darkage:mud", minp, maxp, seed+1, 4, 0, 2, 0)
 	generate_claylike("darkage:silt", minp, maxp, seed+2, 4, -1, 1, 1)
-	print(string.format("[darkage] finished after: %.2fs", os.clock() - t1))
---[[	generate_stratus("darkage:chalk", (name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+3, 4, 25, 8, 0, -20,	50)
-	generate_stratus("darkage:ors",
-					{"default:stone"},
-					{"default:stone","air","default:water_source"}, nil,
-					minp, maxp, seed+4, 4, 25, 7, 50, -200,	500)
-	generate_stratus("darkage:shale",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+5, 4, 23, 7, 50, -50,	20)
-	generate_stratus("darkage:slate",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+6, 6, 23, 5, 50, -500, 0)
-	generate_stratus("darkage:schist",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+7, 6, 19, 6, 50, -31000, -10)
-	generate_stratus("darkage:basalt",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+8, 5, 20, 5, 20, -31000, -50)
-	generate_stratus("darkage:marble",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+9, 4, 25, 6, 50, -31000,	-75)
-	generate_stratus("darkage:serpentine",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+10, 4, 28, 8, 50, -31000,	-350)
-	generate_stratus("darkage:gneiss",
-					{"default:stone"},
-					{"default:stone","air"}, nil,
-					minp, maxp, seed+11, 4, 15, 5, 50, -31000, -250)]]
+
+	generate_strati(minp, maxp, seed, data, area)
+
+	vm:set_data(data)
+	vm:write_to_map()
+
+	minetest.log("info", string.format("[darkage] finished after: %.2fs", os.clock() - t1))
 end)

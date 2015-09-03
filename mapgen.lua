@@ -107,6 +107,9 @@ end
 
 local strati,n = {},1
 local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, stratus_chance, radius, radius_y, deep, height_min, height_max)
+--[[
+	wherein[1] = "air"
+	height_max = 30000--]]
 	strati[n] = {name, wherein, ceilin, seed, stratus_chance, radius, radius_y, deep, height_min, height_max}
 	n = n+1
 end
@@ -295,7 +298,7 @@ generate_stratus("darkage:gneiss",
 minetest.register_on_generated(function(minp, maxp, seed)
 	-- Generate stratus
 	local t1 = os.clock()
-	print("[darkage] Generate...")
+	minetest.log("info", "[darkage] Generate...")
 
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data()

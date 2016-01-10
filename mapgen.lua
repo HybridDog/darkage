@@ -226,7 +226,7 @@ local function generate_stratus(name, wherein, ceilin, ceil, minp, maxp, seed, s
 		ore_type	 	= "sheet",
 		ore				= name,
 		wherein			= "default:stone",
-		noise_threshhold = 1/stratus_chance,
+		noise_threshold = 1/stratus_chance,
 		noise_params	= {offset=0, scale=2, spread={x=radius, y=radius_y, z=radius}, seed=seed, octaves=2, persist=0.70}
 		clust_size		= 4,
 		y_min		= y_min,

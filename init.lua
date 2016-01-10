@@ -1,4 +1,4 @@
-print (" ---- Dark Age is Loading! ---- ")
+minetest.log("info", " ---- Dark Age is Loading! ---- ")
 -- Commend this lines if you don't like some of this features
 dofile(minetest.get_modpath("darkage").."/mapgen.lua")
 dofile(minetest.get_modpath("darkage").."/building.lua")
@@ -503,4 +503,4 @@ minetest.register_craft({
 	}
 })
 dofile(minetest.get_modpath("darkage").."/stairs.lua")
-print("[darkage] loaded")
+minetest.log("info", "[darkage] loaded")

@@ -69,31 +69,29 @@ local function generate_single_stratus(str, minp, maxp, mapseed, data, area)
 			if x then
 				-- search for the node to replace
 				--print("	Searching nodes to replace from "..dump(y0-1).." to "..dump(y_min))
+				local vi = area:index(x0, y0-1, z0)
 				for y1 = y0-1,y_min,-1 do
-					if data[area:index(x0, y1, z0)] == wherein then
-						y0 = y1-deep
-						if y0 < y_min then
-							y0 = y_min
-						end
+					if data[vi] == wherein then
+						y0 = math.max(y1-deep, y_min)
 						break
 					end
+					vi = vi - area.ystride
 				end
 				local rx=pr:next(radius/2,radius)+1
 				local rz=pr:next(radius/2,radius)+1
 				local ry=pr:next(radius_y/2,radius_y)+1
 				--print("	area of generation ("..dump(rx)..","..dump(rz)..","..dump(ry)..")")
+				local vi = area:index(x0, y0, z0)
 				for x1=0,rx do
-					rz = rz + 3 - pr:next(1,6)
-					if rz < 1 then
-						rz = 1
-					end
+					local vi = vi + x1
+					rz = math.max(rz + 3 - pr:next(1,6), 1)
 					for z1=pr:next(1,3),rz do
-						local ry0 = ry + pr:next(1,3)
-						for y1 = pr:next(1,3),ry0 do
-							local p2 = area:index(x0+x1, y0+y1, z0+z1)
-							if data[p2] == wherein then
-								data[p2] = name
-								i = i +1
+						local vi = vi + z1 * area.zstride
+						for y1 = pr:next(1,3), ry + pr:next(1,3) do
+							local vi = vi + y1 * area.ystride
+							if data[vi] == wherein then
+								data[vi] = name
+								i = i + 1
 							end
 						end
 					end
